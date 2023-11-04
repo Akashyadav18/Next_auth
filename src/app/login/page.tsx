@@ -20,12 +20,17 @@ const Login = () => {
         try {
           const res = await axios.post("http://localhost:3000/api/users/login", user)
           console.log(res.data);
-          toast.success("Login successful", {position: "top-center"});
-          router.push("/profile")
+          if(res.data.status === 201) {
+            toast.success(res.data.message, {position: "top-center"});
+            router.push("/profile")
+          }
+          if(res.data.status === 400){
+            toast.error(res.data.message, {position: "top-center"});
+          }
           
-        } catch (error) {
+        } catch (error: any) {
           console.log(error);
-          toast.error("Login Fail", {position: "top-center"});
+          toast.error(error.message, {position: "top-center"});
         }
         finally {
           setUser({email: "", password:""})

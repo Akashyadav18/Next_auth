@@ -21,8 +21,13 @@ const SignUp = () => {
         try {
           const res = await axios.post("http://localhost:3000/api/users/signup", user);
           console.log(res.data);
-          router.push("/login");
-          toast.success("Sign up Successfully", {position: "top-center"})
+          if(res.data.status === 201) {
+            toast.success(res.data.message, {position: "top-center"})
+            router.push("/login");
+          }
+         if(res.data.status ===400){
+           toast.error(res.data.message, {position: "top-center"});
+         }
         } catch (error: any) {
           console.log(error); 
           toast.error(error.message, {position: "top-center"});

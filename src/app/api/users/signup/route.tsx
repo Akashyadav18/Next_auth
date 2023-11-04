@@ -27,7 +27,7 @@ export async function POST(req: NextRequest){
 
         const savedUser = await user.save();
 
-        return NextResponse.json(savedUser, { status: 201,});
+        return NextResponse.json({savedUser, message: "Signup successful", success: true ,status: 201,});
 
     } catch (error) {
         console.log(error);
